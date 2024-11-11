@@ -1,6 +1,6 @@
 name: bananize_mobile_app
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -11,9 +11,22 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  flutter_launcher_icons:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - lib/Assets/banana-white.png
+    - lib/Assets/banana-black.png
+    - lib/Assets/1657952440google-logo-png-transparent.png.webp
+    - lib/Assets/Facebook_Logo_2023.png
+    - lib/Assets/976px-Apple_logo_black.svg.png
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "lib/Assets/banana-white.png"

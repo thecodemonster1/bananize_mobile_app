@@ -1,4 +1,4 @@
-import 'package:bananize_mobile_app/Routes/home.dart';
+import 'package:bananize_mobile_app/Routes/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,6 +10,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(debugShowCheckedModeBanner: false, home: MyHome());
+    return const MaterialApp(debugShowCheckedModeBanner: false, home: MyLogin());
   }
 }

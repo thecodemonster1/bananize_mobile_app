@@ -7,7 +7,7 @@ class MyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
       ),
     );
   }
