@@ -74,13 +74,11 @@ class _MyHomePageState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.only(
+                  top: 80, bottom: 10, left: 10, right: 10),
               child: Column(
                 children: [
                   if (questionImageUrl != null)
