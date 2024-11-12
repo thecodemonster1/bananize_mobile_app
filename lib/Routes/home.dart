@@ -5,9 +5,26 @@ class MyHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+    return Scaffold(
+      backgroundColor: Colors.amberAccent,
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.black, // Text color (white)
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0), // Rounded corners
+            ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32.0, // Horizontal padding
+              vertical: 12.0, // Vertical padding
+            ),
+          ),
+          child: const Text('Go Back'),
+        ),
       ),
     );
   }
