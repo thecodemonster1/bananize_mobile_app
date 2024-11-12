@@ -1,4 +1,5 @@
 import "package:bananize_mobile_app/Routes/home.dart";
+import "package:bananize_mobile_app/Routes/rules.dart";
 import "package:bananize_mobile_app/Routes/signup.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
@@ -116,7 +117,7 @@ class MyLogin extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const MyHome()),
+                                  builder: (context) => const MyRules()),
                             );
                           }, // Add sign in functionality
                           style: ElevatedButton.styleFrom(
