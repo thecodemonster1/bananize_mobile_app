@@ -1,3 +1,4 @@
+import 'package:bananize_mobile_app/Routes/heartIcon.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -17,6 +18,12 @@ class _MyHomePageState extends State<MyHome> {
   String userInput = '';
   bool isLoading = true;
   String message = '';
+  // Example enhancement: Adding a combo counter for consecutive correct answers
+  int comboCounter = 0; // Track consecutive correct answers
+  int score = 0;
+  int lives = 5;
+  int level = 1;
+  bool isComboActive = false;
 
   @override
   void initState() {
@@ -59,16 +66,55 @@ class _MyHomePageState extends State<MyHome> {
 
     if (int.tryParse(userInput) == solution) {
       setState(() {
+        score += isComboActive ? 20 : 10; // Double score if combo is active
         message = 'Correct! 🎉';
+        comboCounter++;
+
+        // Activate combo if player gets 3 correct answers in a row
+        if (comboCounter >= 3) {
+          isComboActive = true;
+          message += ' Combo activated! x2 points';
+        }
+
+        // Check for level completion
+        if (score >= level * 100) {
+          levelUp(); // Go to the next level
+        }
       });
-      // Add a 1-second delay before fetching new data
+
+      // Delay before loading the next question
       await Future.delayed(const Duration(seconds: 1));
-      fetchData(); // Fetch a new image after the correct answer
+      fetchData();
     } else {
+      // Reset combo and reduce life
       setState(() {
+        lives--;
+        comboCounter = 0;
+        isComboActive = false;
         message = 'Wrong answer. Try again!';
+        if (lives <= 0) {
+          gameOver(); // Handle game over
+        }
       });
     }
+  }
+
+  void levelUp() {
+    level++;
+    lives = 5; // Reset lives for each level
+    // Decrease timer duration or add other difficulty settings
+  }
+
+  void gameOver() {
+    setState(() {
+      message = 'Game Over! Your final score: $score';
+      score = 0;
+      level = 1;
+      comboCounter = 0;
+      isComboActive = false;
+      lives = 5;
+    });
+    fetchData(); // Restart with a new question
   }
 
   @override
@@ -81,6 +127,15 @@ class _MyHomePageState extends State<MyHome> {
                   top: 80, bottom: 10, left: 10, right: 10),
               child: Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      lives, // Number of lives remaining
+                      (index) =>
+                          const Hearticon(), // Use HeartIcon widget for each life
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   if (questionImageUrl != null)
                     Image.network(questionImageUrl!),
                   const SizedBox(height: 20),
