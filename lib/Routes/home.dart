@@ -99,6 +99,18 @@ class _MyHomePageState extends State<MyHome> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: checkAnswer,
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.black, // Text color (white)
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(8.0), // Rounded corners
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32.0, // Horizontal padding
+                        vertical: 12.0, // Vertical padding
+                      ),
+                    ),
                     child: const Text('Submit'),
                   ),
                   const SizedBox(height: 20),
