@@ -116,7 +116,7 @@ class MyLogin extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const MyHomePage()),
+                                  builder: (context) => const MyHome()),
                             );
                           }, // Add sign in functionality
                           style: ElevatedButton.styleFrom(

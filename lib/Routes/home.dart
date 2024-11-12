@@ -3,14 +3,14 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class MyHome extends StatefulWidget {
+  const MyHome({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHome> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHome> {
   // List<dynamic> _data = [];
   String? questionImageUrl;
   int? solution;
