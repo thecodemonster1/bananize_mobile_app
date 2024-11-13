@@ -12,18 +12,25 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHome> {
-  // List<dynamic> _data = [];
   String? questionImageUrl;
   int? solution;
   String userInput = '';
   bool isLoading = true;
   String message = '';
-  // Example enhancement: Adding a combo counter for consecutive correct answers
-  int comboCounter = 0; // Track consecutive correct answers
+  int comboCounter = 0;
   int score = 0;
   int lives = 5;
   int level = 1;
   bool isComboActive = false;
+
+  // Timer variables
+  int timerDuration = 20; // Timer duration in seconds
+  int remainingTime = 20;
+  Timer? _timer;
+
+  // Track image loading
+  bool isImageLoaded = false;
+  bool isTimerRunning = false; // Track if the timer is running
 
   @override
   void initState() {
@@ -33,27 +40,70 @@ class _MyHomePageState extends State<MyHome> {
 
   Future<void> fetchData() async {
     setState(() {
-      isLoading = true; // Show loader while fetching new data
-      message = ''; // Clear any previous message
+      isLoading = true;
+      message = '';
+      isImageLoaded = false; // Reset image loaded state
     });
 
     final response =
         await http.get(Uri.parse('http://marcconrad.com/uob/banana/api.php'));
-    // print("checkpoint 1");
+
     if (response.statusCode == 200) {
-      // sucess code 200
       final data = json.decode(response.body);
       setState(() {
-        // _data = json.decode(response.body);
         questionImageUrl = data['question'];
         solution = data['solution'];
-        userInput = ''; // Clear the input field after fetching new data
+        userInput = '';
         isLoading = false;
+        remainingTime = timerDuration; // Reset timer for new question
       });
+      startTimer();
     } else {
-      //  failed to fetch data
       throw Exception('Failed to load data');
     }
+  }
+
+  void startTimer() {
+    _timer?.cancel(); // Cancel any previous timer
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (remainingTime > 0) {
+          remainingTime--;
+        } else {
+          timer.cancel();
+          handleTimeOut();
+        }
+      });
+    });
+    isTimerRunning = true;
+  }
+
+  void toggleTimer() {
+    if (isTimerRunning) {
+      // Pause the timer
+      _timer?.cancel();
+      setState(() {
+        isTimerRunning = false;
+      });
+    } else {
+      // Resume the timer
+      startTimer();
+    }
+  }
+
+
+  void handleTimeOut() {
+    setState(() {
+      lives--;
+      comboCounter = 0;
+      isComboActive = false;
+      message = "Time's up! Moving to next question.";
+      if (lives <= 0) {
+        gameOver();
+      } else {
+        fetchData();
+      }
+    });
   }
 
   void checkAnswer() async {
@@ -66,46 +116,49 @@ class _MyHomePageState extends State<MyHome> {
 
     if (int.tryParse(userInput) == solution) {
       setState(() {
-        score += isComboActive ? 20 : 10; // Double score if combo is active
+        score += isComboActive ? 20 : 10;
         message = 'Correct! 🎉';
         comboCounter++;
 
-        // Activate combo if player gets 3 correct answers in a row
         if (comboCounter >= 3) {
           isComboActive = true;
           message += ' Combo activated! x2 points';
         }
 
-        // Check for level completion
         if (score >= level * 100) {
-          levelUp(); // Go to the next level
+          levelUp();
         }
       });
 
-      // Delay before loading the next question
       await Future.delayed(const Duration(seconds: 1));
       fetchData();
     } else {
-      // Reset combo and reduce life
       setState(() {
         lives--;
         comboCounter = 0;
         isComboActive = false;
         message = 'Wrong answer. Try again!';
         if (lives <= 0) {
-          gameOver(); // Handle game over
+          gameOver();
+        } else {
+          userInput = '';
         }
       });
     }
   }
 
   void levelUp() {
-    level++;
-    lives = 5; // Reset lives for each level
-    // Decrease timer duration or add other difficulty settings
+    setState(() {
+      level++;
+      lives = 5;
+      isComboActive = false;
+      comboCounter = 0;
+      message = 'Level up! Welcome to level $level';
+    });
   }
 
   void gameOver() {
+    _timer?.cancel(); // Stop the timer
     setState(() {
       message = 'Game Over! Your final score: $score';
       score = 0;
@@ -114,71 +167,137 @@ class _MyHomePageState extends State<MyHome> {
       isComboActive = false;
       lives = 5;
     });
-    fetchData(); // Restart with a new question
+    fetchData();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.only(
-                  top: 80, bottom: 10, left: 10, right: 10),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      lives, // Number of lives remaining
-                      (index) =>
-                          const Hearticon(), // Use HeartIcon widget for each life
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  if (questionImageUrl != null)
-                    Image.network(questionImageUrl!),
-                  const SizedBox(height: 20),
-                  TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        userInput = value;
-                      });
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Enter your answer',
-                      border: OutlineInputBorder(),
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: checkAnswer,
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.black, // Text color (white)
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(8.0), // Rounded corners
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32.0, // Horizontal padding
-                        vertical: 12.0, // Vertical padding
+        backgroundColor: Colors.white,
+        body: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: const EdgeInsets.only(
+                    top: 80, bottom: 10, left: 10, right: 10),
+                child: Column(
+                  children: [
+                    // Display Score
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Score: $score',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                    child: const Text('Submit'),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    message,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                    const SizedBox(height: 10),
+                    // Timer and Lives Row
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Time: $remainingTime',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                        Row(
+                          children: List.generate(
+                            lives,
+                            (index) => const Hearticon(),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-    );
+                    const SizedBox(height: 20),
+                    if (questionImageUrl != null)
+                      Image.network(
+                        questionImageUrl!,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            // Image has fully loaded, set isImageLoaded to true
+                            if (!isImageLoaded) {
+                              setState(() {
+                                isImageLoaded = true;
+                              });
+                              startTimer(); // Start the timer only when the image has loaded
+                            }
+                            return child;
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
+                      ),
+                    const SizedBox(height: 20),
+                    TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          userInput = value;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Enter your answer',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                      controller: TextEditingController(text: userInput),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 32.0,
+                                vertical: 12.0,
+                              ),
+                            ),
+                            child: Text(isTimerRunning ? 'Pause' : 'Play')),
+                        ElevatedButton(
+                          onPressed: checkAnswer,
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 32.0,
+                              vertical: 12.0,
+                            ),
+                          ),
+                          child: const Text('Submit'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      message,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ));
   }
 }
