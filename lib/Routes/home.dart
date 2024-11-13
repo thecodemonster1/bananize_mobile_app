@@ -91,7 +91,6 @@ class _MyHomePageState extends State<MyHome> {
     }
   }
 
-
   void handleTimeOut() {
     setState(() {
       lives--;
@@ -182,83 +181,100 @@ class _MyHomePageState extends State<MyHome> {
         backgroundColor: Colors.white,
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
-            : Padding(
-                padding: const EdgeInsets.only(
-                    top: 80, bottom: 10, left: 10, right: 10),
-                child: Column(
-                  children: [
-                    // Display Score
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Score: $score',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    // Timer and Lives Row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Time: $remainingTime',
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 80, bottom: 10, left: 10, right: 10),
+                  child: Column(
+                    children: [
+                      // Display Score
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Score: $score',
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.red,
+                            color: Colors.black,
                           ),
                         ),
-                        Row(
-                          children: List.generate(
-                            lives,
-                            (index) => const Hearticon(),
+                      ),
+                      const SizedBox(height: 10),
+                      // Timer and Lives Row
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Time: $remainingTime',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
                           ),
+                          Row(
+                            children: List.generate(
+                              lives,
+                              (index) => const Hearticon(),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      if (questionImageUrl != null)
+                        Image.network(
+                          questionImageUrl!,
+                          // loadingBuilder: (context, child, loadingProgress) {
+                          //   if (loadingProgress == null) {
+                          //     // Image has fully loaded, set isImageLoaded to true
+                          //     if (!isImageLoaded) {
+                          //       setState(() {
+                          //         isImageLoaded = true;
+                          //       });
+                          //       startTimer(); // Start the timer only when the image has loaded
+                          //     }
+                          //     return child;
+                          //   } else {
+                          //     return const CircularProgressIndicator();
+                          //   }
+                          // },
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    if (questionImageUrl != null)
-                      Image.network(
-                        questionImageUrl!,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            // Image has fully loaded, set isImageLoaded to true
-                            if (!isImageLoaded) {
-                              setState(() {
-                                isImageLoaded = true;
-                              });
-                              startTimer(); // Start the timer only when the image has loaded
-                            }
-                            return child;
-                          } else {
-                            return const SizedBox.shrink();
-                          }
+                      const SizedBox(height: 20),
+                      TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            userInput = value;
+                          });
                         },
+                        decoration: const InputDecoration(
+                          labelText: 'Enter your answer',
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        controller: TextEditingController(text: userInput),
                       ),
-                    const SizedBox(height: 20),
-                    TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          userInput = value;
-                        });
-                      },
-                      decoration: const InputDecoration(
-                        labelText: 'Enter your answer',
-                        border: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.number,
-                      controller: TextEditingController(text: userInput),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {},
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                toggleTimer();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.black,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 32.0,
+                                  vertical: 12.0,
+                                ),
+                              ),
+                              child: Text(isTimerRunning ? 'Pause' : 'Play')),
+                          ElevatedButton(
+                            onPressed: checkAnswer,
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
                               backgroundColor: Colors.black,
@@ -270,33 +286,20 @@ class _MyHomePageState extends State<MyHome> {
                                 vertical: 12.0,
                               ),
                             ),
-                            child: Text(isTimerRunning ? 'Pause' : 'Play')),
-                        ElevatedButton(
-                          onPressed: checkAnswer,
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 32.0,
-                              vertical: 12.0,
-                            ),
+                            child: const Text('Submit'),
                           ),
-                          child: const Text('Submit'),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      message,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        ],
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      Text(
+                        message,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ));
   }
