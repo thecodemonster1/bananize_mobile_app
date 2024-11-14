@@ -52,13 +52,19 @@ Bananize is a fun and interactive Flutter-based quiz game that challenges users 
    cd bananize_mobile_app
    ```
 2. Install dependencies:
-   `flutter pub get`
+
+```
+   flutter pub get
+```
+
 3. Set up Firebase:
    - Create a Firebase project.
    - Enable Authentication and Firestore Database in Firebase Console.
    - Download the google-services.json (for Android) or GoogleService-Info.plist (for iOS)files and place them in their respective folders in your project.
 4. Run the app on an emulator or connected device:
-   `flutter run`
+   ```
+   flutter run
+   ```
 
 ### Usage
 
@@ -70,6 +76,7 @@ Bananize is a fun and interactive Flutter-based quiz game that challenges users 
 ## Folder Structure
 
 ```
+
 bananize_mobile_app/
 │
 ├── lib/
@@ -90,6 +97,7 @@ bananize_mobile_app/
 ├── pubspec.yaml # Dependencies
 │
 └── README.md
+
 ```
 
 ## Contributing
@@ -110,3 +118,4 @@ This project is licensed under the MIT License.
 - Replace `https://github.com/thecodemonster1/bananize_mobile_app.git` with your repository's URL.
 - Add actual images to the `Screenshots` section, if available, or add placeholder image links.
 - Update Firebase integration details as needed, depending on the data you’re storing.
+```
