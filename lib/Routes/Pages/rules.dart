@@ -1,4 +1,4 @@
-import 'package:bananize_mobile_app/Routes/home.dart';
+import 'package:bananize_mobile_app/Routes/Pages/home.dart';
 import 'package:flutter/material.dart';
 
 class MyRules extends StatelessWidget {

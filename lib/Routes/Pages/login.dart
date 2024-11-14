@@ -1,5 +1,5 @@
-import "package:bananize_mobile_app/Routes/rules.dart";
-import "package:bananize_mobile_app/Routes/signup.dart";
+import "package:bananize_mobile_app/Routes/Pages/rules.dart";
+import "package:bananize_mobile_app/Routes/Pages/signup.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
