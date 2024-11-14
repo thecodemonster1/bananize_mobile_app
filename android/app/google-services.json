@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "750284049626",
+    "project_id": "bananizeapp",
+    "storage_bucket": "bananizeapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750284049626:android:951f5f5999b431128ce9e3",
+        "android_client_info": {
+          "package_name": "com.bananize.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlTTEvEuRNfsXdRSLtJ2kApbE1_vnDVvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
