@@ -118,4 +118,3 @@ This project is licensed under the MIT License.
 - Replace `https://github.com/thecodemonster1/bananize_mobile_app.git` with your repository's URL.
 - Add actual images to the `Screenshots` section, if available, or add placeholder image links.
 - Update Firebase integration details as needed, depending on the data you’re storing.
-```
