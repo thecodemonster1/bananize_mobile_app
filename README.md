@@ -47,7 +47,8 @@ Bananize is a fun and interactive Flutter-based quiz game that challenges users 
 ### Steps
 
 1. Clone the repository:
-   ````git clone https://github.com/username/bananize_mobile_app.git
+   ````
+   git clone https://github.com/username/bananize_mobile_app.git
    cd bananize_mobile_app
    ````
 2. Install dependencies:
