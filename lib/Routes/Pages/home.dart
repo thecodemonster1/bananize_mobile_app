@@ -57,7 +57,6 @@ class _MyHomePageState extends State<MyHome> {
         isLoading = false;
         remainingTime = timerDuration; // Reset timer for new question
       });
-      startTimer();
     } else {
       throw Exception('Failed to load data');
     }
@@ -97,6 +96,7 @@ class _MyHomePageState extends State<MyHome> {
       comboCounter = 0;
       isComboActive = false;
       message = "Time's up! Moving to next question.";
+      Future.delayed(const Duration(seconds: 1));
       if (lives <= 0) {
         gameOver();
       } else {
@@ -118,10 +118,12 @@ class _MyHomePageState extends State<MyHome> {
         score += isComboActive ? 20 : 10;
         message = 'Correct! 🎉';
         comboCounter++;
+        debugPrint("score: $score");
 
         if (comboCounter >= 3) {
           isComboActive = true;
           message += ' Combo activated! x2 points';
+          debugPrint("comboCounter: $comboCounter");
         }
 
         if (score >= level * 100) {
@@ -137,7 +139,6 @@ class _MyHomePageState extends State<MyHome> {
         comboCounter = 0;
         isComboActive = false;
         message = 'Wrong answer. Try again!';
-        // userInput = '';
         if (lives <= 0) {
           gameOver();
         }
@@ -152,7 +153,6 @@ class _MyHomePageState extends State<MyHome> {
       isComboActive = false;
       comboCounter = 0;
       message = 'Level up! Welcome to level $level';
-      debugPrint("Level: $level");
     });
   }
 
@@ -222,23 +222,83 @@ class _MyHomePageState extends State<MyHome> {
                       ),
                       const SizedBox(height: 20),
                       if (questionImageUrl != null)
-                        Image.network(
-                          questionImageUrl!,
-                          // loadingBuilder: (context, child, loadingProgress) {
-                          //   if (loadingProgress == null) {
-                          //     // Image has fully loaded, set isImageLoaded to true
-                          //     if (!isImageLoaded) {
-                          //       setState(() {
-                          //         isImageLoaded = true;
-                          //       });
-                          //       startTimer(); // Start the timer only when the image has loaded
-                          //     }
-                          //     return child;
-                          //   } else {
-                          //     return const CircularProgressIndicator();
-                          //   }
-                          // },
-                        ),
+                        isTimerRunning
+                            ? Image.network(
+                                // "http://marcconrad.com/uob/banana/api.php",
+                                questionImageUrl!,
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  (loadingProgress
+                                                          .expectedTotalBytes ??
+                                                      1)
+                                              : null,
+                                    ),
+                                  );
+                                },
+                              )
+
+                            // Image.network(
+                            //     // "http://marcconrad.com/uob/banana/api.php",
+                            //     questionImageUrl!,
+                            //     loadingBuilder: (BuildContext context,
+                            //         Widget child,
+                            //         ImageChunkEvent? loadingProgress) {
+                            //       if (loadingProgress == null) {
+                            //         return child;
+                            //       } else {
+                            //         WidgetsBinding.instance
+                            //             .addPostFrameCallback((_) {
+                            //           if (mounted) {
+                            //             setState(() {
+                            //               // Update state here
+                            //             });
+                            //           }
+                            //         });
+                            //         return CircularProgressIndicator();
+                            //       }
+                            //     },
+                            //   )
+
+                            // Image.network(
+                            //     questionImageUrl!,
+                            //     loadingBuilder:
+                            //         (context, child, loadingProgress) {
+                            //       if (loadingProgress == null) {
+                            //         if (!isImageLoaded) {
+                            //           setState(() {
+                            //             isImageLoaded = true;
+                            //           });
+                            //           startTimer(); // Start the timer only when the image has loaded
+                            //         }
+                            //         return child;
+                            //       } else {
+                            //         return const CircularProgressIndicator();
+                            //       }
+                            //     },
+                            //   )
+                            : Container(
+                                height: 200,
+                                color: Colors.black.withOpacity(0.2),
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'Paused',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                              ),
                       const SizedBox(height: 20),
                       TextField(
                         onChanged: (value) {
@@ -251,16 +311,14 @@ class _MyHomePageState extends State<MyHome> {
                           border: OutlineInputBorder(),
                         ),
                         keyboardType: TextInputType.number,
-                        // controller: TextEditingController(text: userInput),
                       ),
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // Play/Pause Button
                           ElevatedButton(
-                              onPressed: () {
-                                toggleTimer();
-                              },
+                              onPressed: toggleTimer,
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
                                 backgroundColor: Colors.black,
@@ -273,33 +331,15 @@ class _MyHomePageState extends State<MyHome> {
                                 ),
                               ),
                               child: Text(isTimerRunning ? '▐▐ ' : ' ▶ ')),
-                          ElevatedButton(
-                            onPressed: checkAnswer,
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor:
-                                  const Color.fromARGB(255, 0, 0, 0),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 255, 204, 0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 32.0,
-                                vertical: 12.0,
-                              ),
-                            ),
-                            child: const Text('Answer'),
-                          ),
+                          // Skip Button
                           ElevatedButton(
                             onPressed: () {
-                              score -= 10;
+                              score -= 5;
                               fetchData();
                             },
                             style: ElevatedButton.styleFrom(
-                              foregroundColor:
-                                  const Color.fromARGB(255, 255, 255, 255),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 0, 0, 0),
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.black,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
@@ -309,6 +349,22 @@ class _MyHomePageState extends State<MyHome> {
                               ),
                             ),
                             child: const Text('Skip'),
+                          ),
+                          // Answer Button
+                          ElevatedButton(
+                            onPressed: checkAnswer,
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.black,
+                              backgroundColor: Colors.yellow,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 32.0,
+                                vertical: 12.0,
+                              ),
+                            ),
+                            child: const Text('Answer'),
                           ),
                         ],
                       ),
