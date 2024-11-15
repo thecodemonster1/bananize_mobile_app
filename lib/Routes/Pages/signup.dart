@@ -28,6 +28,15 @@ class MySignup extends StatelessWidget {
                     height: oneSideSize.toDouble(),
                   ),
                 ),
+                // const SizedBox(height: 20),
+                const Text(
+                  'Bananize',
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 20),
 
                 // Card for Sign Up Form
@@ -43,9 +52,9 @@ class MySignup extends StatelessWidget {
                       children: [
                         // Sign Up title
                         const Text(
-                          'SIGN UP',
+                          'S I G N U P',
                           style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                              fontSize: 34, fontWeight: FontWeight.normal),
                         ),
                         const SizedBox(height: 20),
 

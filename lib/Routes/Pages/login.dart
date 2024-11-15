@@ -32,6 +32,14 @@ class MyLogin extends StatelessWidget {
                     height: logoSize.toDouble(),
                   ),
                 ),
+                const Text(
+                  'Bananize',
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 20),
 
                 // Card for Login Form
@@ -47,9 +55,9 @@ class MyLogin extends StatelessWidget {
                       children: [
                         // Login title
                         const Text(
-                          'LOGIN',
+                          'L O G I N',
                           style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                              fontSize: 34, fontWeight: FontWeight.normal),
                         ),
                         const SizedBox(height: 20),
 
