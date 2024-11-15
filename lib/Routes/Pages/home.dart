@@ -137,10 +137,9 @@ class _MyHomePageState extends State<MyHome> {
         comboCounter = 0;
         isComboActive = false;
         message = 'Wrong answer. Try again!';
+        // userInput = '';
         if (lives <= 0) {
           gameOver();
-        } else {
-          userInput = '';
         }
       });
     }
@@ -153,6 +152,7 @@ class _MyHomePageState extends State<MyHome> {
       isComboActive = false;
       comboCounter = 0;
       message = 'Level up! Welcome to level $level';
+      debugPrint("Level: $level");
     });
   }
 
@@ -251,7 +251,7 @@ class _MyHomePageState extends State<MyHome> {
                           border: OutlineInputBorder(),
                         ),
                         keyboardType: TextInputType.number,
-                        controller: TextEditingController(text: userInput),
+                        // controller: TextEditingController(text: userInput),
                       ),
                       const SizedBox(height: 20),
                       Row(
@@ -272,7 +272,7 @@ class _MyHomePageState extends State<MyHome> {
                                   vertical: 12.0,
                                 ),
                               ),
-                              child: Text(isTimerRunning ? 'Pause' : 'Play')),
+                              child: Text(isTimerRunning ? '▐▐ ' : ' ▶ ')),
                           ElevatedButton(
                             onPressed: checkAnswer,
                             style: ElevatedButton.styleFrom(
