@@ -20,7 +20,17 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: lib/Assets/Fonts/Roboto-Black.ttf
+        - asset: lib/Assets/Fonts/Roboto-Italic.ttf
+        - asset: lib/Assets/Fonts/Roboto-Light.ttf
+        - asset: lib/Assets/Fonts/Roboto-Medium.ttf
+        - asset: lib/Assets/Fonts/Roboto-Regular.ttf
+        - asset: lib/Assets/Fonts/Roboto-Thin.ttf
+        - asset: lib/Assets/Fonts/Roboto-Bold.ttf
+          weight: 700
   assets:
     - lib/Assets/banana-white.png
     - lib/Assets/banana-black.png
