@@ -24,10 +24,6 @@ class MyLogin extends StatelessWidget {
                 // Logo
                 Container(
                   padding: const EdgeInsets.all(1.0),
-                  // decoration: BoxDecoration(
-                  //   color: Colors.blueAccent,
-                  //   borderRadius: BorderRadius.circular(8.0),
-                  // ),
                   child: Image.asset(
                     'lib/Assets/banana-white.png',
                     width: logoSize.toDouble(),

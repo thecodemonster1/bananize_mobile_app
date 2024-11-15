@@ -276,8 +276,10 @@ class _MyHomePageState extends State<MyHome> {
                           ElevatedButton(
                             onPressed: checkAnswer,
                             style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.black,
+                              foregroundColor:
+                                  const Color.fromARGB(255, 0, 0, 0),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 255, 204, 0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
@@ -286,7 +288,27 @@ class _MyHomePageState extends State<MyHome> {
                                 vertical: 12.0,
                               ),
                             ),
-                            child: const Text('Submit'),
+                            child: const Text('Answer'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              score -= 10;
+                              fetchData();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor:
+                                  const Color.fromARGB(255, 255, 255, 255),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 0, 0, 0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 32.0,
+                                vertical: 12.0,
+                              ),
+                            ),
+                            child: const Text('Skip'),
                           ),
                         ],
                       ),
