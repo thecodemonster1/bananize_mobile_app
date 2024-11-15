@@ -7,6 +7,8 @@ class MyLogin extends StatelessWidget {
   const MyLogin({super.key});
   final logoSize = 250.0;
   final iconSize = 30;
+  final String username = "";
+  final String password = "";
 
   @override
   Widget build(BuildContext context) {
