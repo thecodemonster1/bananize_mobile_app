@@ -153,6 +153,7 @@ class _MyHomePageState extends State<MyHome> {
       isComboActive = false;
       comboCounter = 0;
       message = 'Level up! Welcome to level $level';
+      debugPrint("level: $level");
     });
   }
 
