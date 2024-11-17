@@ -189,16 +189,32 @@ class _MyHomePageState extends State<MyHome> {
                   child: Column(
                     children: [
                       // Display Score
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Score: $score',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'LEVEL: $level',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
-                        ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'SCORE: $score',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 10),
                       // Timer and Lives Row
