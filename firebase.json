@@ -1,1 +1,39 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"bananizeapp","appId":"1:750284049626:android:951f5f5999b431128ce9e3","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"bananizeapp","appId":"1:750284049626:ios:d104b5a28b3b8d7a8ce9e3","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"bananizeapp","appId":"1:750284049626:ios:d104b5a28b3b8d7a8ce9e3","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"bananizeapp","configurations":{"android":"1:750284049626:android:951f5f5999b431128ce9e3","ios":"1:750284049626:ios:d104b5a28b3b8d7a8ce9e3","web":"1:750284049626:web:69ebea4a3fa495738ce9e3"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "bananizeapp",
+          "appId": "1:750284049626:android:951f5f5999b431128ce9e3",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "bananizeapp",
+          "appId": "1:750284049626:ios:d104b5a28b3b8d7a8ce9e3",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "bananizeapp",
+          "appId": "1:750284049626:ios:d104b5a28b3b8d7a8ce9e3",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "bananizeapp",
+          "configurations": {
+            "android": "1:750284049626:android:951f5f5999b431128ce9e3",
+            "ios": "1:750284049626:ios:d104b5a28b3b8d7a8ce9e3",
+            "web": "1:750284049626:web:69ebea4a3fa495738ce9e3"
+          }
+        }
+      }
+    }
+  }
+}
