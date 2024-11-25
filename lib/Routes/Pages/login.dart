@@ -4,11 +4,34 @@ import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
 class MyLogin extends StatelessWidget {
-  const MyLogin({super.key});
+  MyLogin({super.key});
   final logoSize = 250.0;
   final iconSize = 30;
-  final String username = "";
-  final String password = "";
+  // final String username = "";
+  // final String password = "";
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _login(BuildContext context) {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+    // debugPrint("username: $username");
+    // debugPrint("password: $password");
+
+    // Add your login logic here
+    if (username == 'admin' && password == 'password') {
+      // Navigate to the next screen if login is successful
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const MyRules()),
+      );
+    } else {
+      // Show an error message if login fails
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Invalid username or password')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +48,7 @@ class MyLogin extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(1.0),
                   child: Image.asset(
-                    'lib/Assets/banana-white.png',
+                    'lib/Assets/Images/banana-white.png',
                     width: logoSize.toDouble(),
                     height: logoSize.toDouble(),
                   ),
@@ -61,6 +84,7 @@ class MyLogin extends StatelessWidget {
 
                         // Username TextField
                         TextField(
+                          controller: _usernameController,
                           decoration: InputDecoration(
                             labelText: 'Username',
                             border: OutlineInputBorder(
@@ -72,13 +96,14 @@ class MyLogin extends StatelessWidget {
 
                         // Password TextField
                         TextField(
+                          controller: _passwordController,
+                          obscureText: true,
                           decoration: InputDecoration(
                             labelText: 'Password',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
-                          obscureText: true,
                         ),
                         const SizedBox(height: 20),
 
@@ -88,7 +113,7 @@ class MyLogin extends StatelessWidget {
                           children: [
                             IconButton(
                               icon: Image.asset(
-                                'lib/Assets/1657952440google-logo-png-transparent.png.webp',
+                                'lib/Assets/Images/1657952440google-logo-png-transparent.png.webp',
                                 width: iconSize.toDouble(),
                                 height: iconSize.toDouble(),
                               ),
@@ -97,7 +122,7 @@ class MyLogin extends StatelessWidget {
                             ),
                             IconButton(
                               icon: Image.asset(
-                                'lib/Assets/976px-Apple_logo_black.svg.png',
+                                'lib/Assets/Images/976px-Apple_logo_black.svg.png',
                                 width: iconSize.toDouble(),
                                 height: iconSize.toDouble(),
                               ),
@@ -105,7 +130,7 @@ class MyLogin extends StatelessWidget {
                             ),
                             IconButton(
                               icon: Image.asset(
-                                'lib/Assets/Facebook_Logo_2023.png',
+                                'lib/Assets/Images/Facebook_Logo_2023.png',
                                 width: iconSize.toDouble(),
                                 height: iconSize.toDouble(),
                               ),
@@ -119,11 +144,7 @@ class MyLogin extends StatelessWidget {
                         // Sign in button
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const MyRules()),
-                            );
+                            _login(context);
                           }, // Add sign in functionality
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
