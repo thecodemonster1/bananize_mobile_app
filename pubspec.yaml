@@ -32,11 +32,11 @@ flutter:
         - asset: lib/Assets/Fonts/Roboto-Bold.ttf
           weight: 700
   assets:
-    - lib/Assets/banana-white.png
-    - lib/Assets/banana-black.png
-    - lib/Assets/1657952440google-logo-png-transparent.png.webp
-    - lib/Assets/Facebook_Logo_2023.png
-    - lib/Assets/976px-Apple_logo_black.svg.png
+    - lib/Assets/Images/banana-white.png
+    - lib/Assets/Images/banana-black.png
+    - lib/Assets/Images/1657952440google-logo-png-transparent.png.webp
+    - lib/Assets/Images/Facebook_Logo_2023.png
+    - lib/Assets/Images/976px-Apple_logo_black.svg.png
 
 flutter_icons:
   android: true
