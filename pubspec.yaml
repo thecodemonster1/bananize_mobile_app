@@ -41,4 +41,4 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "lib/Assets/banana-white.png"
+  image_path: "lib/Assets/Images/banana-white.png"
