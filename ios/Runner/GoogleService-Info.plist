@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>750284049626-7olg1ojtts31d29fb8fkm47egsvdla1c.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.750284049626-7olg1ojtts31d29fb8fkm47egsvdla1c</string>
 	<key>API_KEY</key>
 	<string>AIzaSyD-3bpOwXc-lnm3i-nm6Vyk_GFqEyETeOc</string>
 	<key>GCM_SENDER_ID</key>
@@ -26,5 +30,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:750284049626:ios:d104b5a28b3b8d7a8ce9e3</string>
+	<key>DATABASE_URL</key>
+	<string>https://bananizeapp-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
