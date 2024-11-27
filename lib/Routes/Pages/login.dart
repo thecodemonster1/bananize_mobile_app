@@ -15,8 +15,8 @@ class MyLogin extends StatelessWidget {
   void _login(BuildContext context) {
     String username = _usernameController.text;
     String password = _passwordController.text;
-    // debugPrint("username: $username");
-    // debugPrint("password: $password");
+    debugPrint("username: $username");
+    debugPrint("password: $password");
 
     // Add your login logic here
     if (username == 'admin' && password == 'password') {
