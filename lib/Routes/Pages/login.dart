@@ -1,5 +1,6 @@
 import "package:bananize_mobile_app/Routes/Pages/rules.dart";
 import "package:bananize_mobile_app/Routes/Pages/signup.dart";
+import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
@@ -9,26 +10,25 @@ class MyLogin extends StatelessWidget {
   final iconSize = 30;
   // final String username = "";
   // final String password = "";
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void _login(BuildContext context) {
-    String username = _usernameController.text;
-    String password = _passwordController.text;
-    debugPrint("username: $username");
-    debugPrint("password: $password");
-
-    // Add your login logic here
-    if (username == 'admin' && password == 'password') {
+  void _login(BuildContext context) async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
       // Navigate to the next screen if login is successful
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const MyRules()),
       );
-    } else {
+    } on FirebaseAuthException catch (e) {
       // Show an error message if login fails
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Invalid username or password')),
+        SnackBar(content: Text(e.message ?? 'Login failed')),
       );
     }
   }
@@ -82,11 +82,11 @@ class MyLogin extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
 
-                        // Username TextField
+                        // Email TextField
                         TextField(
-                          controller: _usernameController,
+                          controller: _emailController,
                           decoration: InputDecoration(
-                            labelText: 'Username',
+                            labelText: 'Email',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
