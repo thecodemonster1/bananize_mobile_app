@@ -23,7 +23,7 @@ class MySignup extends StatelessWidget {
                   //   borderRadius: BorderRadius.circular(8.0),
                   // ),
                   child: Image.asset(
-                    'lib/Assets/banana-white.png',
+                    'lib/Assets/Images/banana-white.png',
                     width: oneSideSize.toDouble(),
                     height: oneSideSize.toDouble(),
                   ),
