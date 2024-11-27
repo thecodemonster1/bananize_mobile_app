@@ -1,8 +1,42 @@
+import "package:bananize_mobile_app/Routes/Pages/login.dart";
+import "package:bananize_mobile_app/Routes/Pages/rules.dart";
+import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 
 class MySignup extends StatelessWidget {
-  const MySignup({super.key});
+  MySignup({super.key});
   final int oneSideSize = 250;
+
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void _signUp(BuildContext context) async {
+    try {
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+                'Sign up successful \nWelcome ${userCredential.user!.email}')),
+      );
+      // Navigate to the next screen if sign-up is successful
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MyRules()),
+      );
+    } on FirebaseAuthException catch (e) {
+      // Show an error message if sign-up fails
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: ${e.message ?? 'Login failed'}")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +94,7 @@ class MySignup extends StatelessWidget {
 
                         // Username TextField
                         TextField(
+                          controller: _usernameController,
                           decoration: InputDecoration(
                             labelText: 'Username',
                             border: OutlineInputBorder(
@@ -71,6 +106,7 @@ class MySignup extends StatelessWidget {
 
                         // Email TextField
                         TextField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                             labelText: 'Email',
                             border: OutlineInputBorder(
@@ -82,6 +118,7 @@ class MySignup extends StatelessWidget {
 
                         // Password TextField
                         TextField(
+                          controller: _passwordController,
                           decoration: InputDecoration(
                             labelText: 'Password',
                             border: OutlineInputBorder(
@@ -94,7 +131,9 @@ class MySignup extends StatelessWidget {
 
                         // Sign Up button
                         ElevatedButton(
-                          onPressed: () {}, // Add sign up functionality
+                          onPressed: () {
+                            _signUp(context);
+                          }, // sign up functionality
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor: Colors.black, // Text color (white)
@@ -111,7 +150,7 @@ class MySignup extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
 
-                        // Already have an account link
+                        // if already have an account 
                         TextButton(
                           onPressed: () {
                             Navigator.pop(context); // Go back to login page
