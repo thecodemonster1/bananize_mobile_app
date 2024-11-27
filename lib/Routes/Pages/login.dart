@@ -22,7 +22,9 @@ class MyLogin extends StatelessWidget {
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login successful \nWelcome ${userCredential.user!.email}')),
+        SnackBar(
+            content: Text(
+                'Login successful \nWelcome ${userCredential.user!.email}')),
       );
       // Navigate to the next screen if login is successful
       Navigator.push(
@@ -178,7 +180,7 @@ class MyLogin extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const MySignup()),
+                                  builder: (context) => MySignup()),
                             );
                           },
                           child: const Text('New User? Sign Up'),
