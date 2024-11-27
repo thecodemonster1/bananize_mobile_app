@@ -21,7 +21,7 @@ class MyRules extends StatelessWidget {
                     children: [
                       TextSpan(
                         text:
-                            "Welcome to the 🍌 Bananize Game! Here are the rules:\n\n",
+                            "Welcome to the 🍌 Bananize Game! Here are the 18 rules:\n\n",
                         style: const TextStyle(
                           fontWeight: FontWeight.bold, // Bold style
                           fontSize:
