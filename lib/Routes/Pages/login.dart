@@ -20,6 +20,10 @@ class MyLogin extends StatelessWidget {
         email: _emailController.text,
         password: _passwordController.text,
       );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login successful \nWelcome ${userCredential.user!.email}')),
+      );
       // Navigate to the next screen if login is successful
       Navigator.push(
         context,
@@ -28,7 +32,7 @@ class MyLogin extends StatelessWidget {
     } on FirebaseAuthException catch (e) {
       // Show an error message if login fails
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.message ?? 'Login failed')),
+        SnackBar(content: Text("Error: ${e.message ?? 'Login failed'}")),
       );
     }
   }
