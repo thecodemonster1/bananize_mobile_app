@@ -1,4 +1,3 @@
-import "package:bananize_mobile_app/Routes/Pages/login.dart";
 import "package:bananize_mobile_app/Routes/Pages/rules.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
