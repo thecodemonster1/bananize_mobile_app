@@ -38,6 +38,7 @@ target 'Runner' do
 
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'GoogleSignIn', '~> 7.1.0'
 end
 
 post_install do |installer|
