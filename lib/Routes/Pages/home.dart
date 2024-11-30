@@ -1,3 +1,4 @@
+import 'package:bananize_mobile_app/Routes/Pages/rules.dart';
 import 'package:bananize_mobile_app/Routes/Widgets/heartIcon.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -191,10 +192,30 @@ class _MyHomePageState extends State<MyHome> {
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          ElevatedButton(onPressed: () {}, child: Text("Exit")),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 150, 34, 34),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0,
+                                  vertical: 12.0,
+                                ),
+                              ),
+                              child: Icon(Icons.exit_to_app_rounded)),
+                          SizedBox(width: 10),
                         ],
                       ),
+                      SizedBox(height: 20),
                       // Display Score
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -247,31 +268,6 @@ class _MyHomePageState extends State<MyHome> {
                       const SizedBox(height: 20),
                       if (questionImageUrl != null)
                         isTimerRunning
-                            // ? Image.network(
-                            //     // "http://marcconrad.com/uob/banana/api.php",
-                            //     questionImageUrl!,
-                            //     loadingBuilder: (BuildContext context,
-                            //         Widget child,
-                            //         ImageChunkEvent? loadingProgress) {
-                            //       if (loadingProgress == null) {
-                            //         return child;
-                            //       }
-                            //       return Center(
-                            //         child: CircularProgressIndicator(
-                            //           value:
-                            //               loadingProgress.expectedTotalBytes !=
-                            //                       null
-                            //                   ? loadingProgress
-                            //                           .cumulativeBytesLoaded /
-                            //                       (loadingProgress
-                            //                               .expectedTotalBytes ??
-                            //                           1)
-                            //                   : null,
-                            //         ),
-                            //       );
-                            //     },
-                            //   )
-
                             ? Image.network(
                                 // "http://marcconrad.com/uob/banana/api.php",
                                 questionImageUrl!,
@@ -280,19 +276,44 @@ class _MyHomePageState extends State<MyHome> {
                                     ImageChunkEvent? loadingProgress) {
                                   if (loadingProgress == null) {
                                     return child;
-                                  } else {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) {
-                                      if (mounted) {
-                                        setState(() {
-                                          // Update state here
-                                        });
-                                      }
-                                    });
-                                    return CircularProgressIndicator();
                                   }
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  (loadingProgress
+                                                          .expectedTotalBytes ??
+                                                      1)
+                                              : null,
+                                    ),
+                                  );
                                 },
                               )
+
+                            // ? Image.network(
+                            //     // "http://marcconrad.com/uob/banana/api.php",
+                            //     questionImageUrl!,
+                            //     loadingBuilder: (BuildContext context,
+                            //         Widget child,
+                            //         ImageChunkEvent? loadingProgress) {
+                            //       if (loadingProgress == null) {
+                            //         return child;
+                            //       } else {
+                            //         WidgetsBinding.instance
+                            //             .addPostFrameCallback((_) {
+                            //           if (mounted) {
+                            //             setState(() {
+                            //               // Update state here
+                            //             });
+                            //           }
+                            //         });
+                            //         return CircularProgressIndicator();
+                            //       }
+                            //     },
+                            //   )
 
                             // Image.network(
                             //     questionImageUrl!,
@@ -358,6 +379,10 @@ class _MyHomePageState extends State<MyHome> {
                           // Skip Button
                           ElevatedButton(
                             onPressed: () {
+                              if (score == 0) {
+                                score -= 5;
+                                return gameOver();
+                              }
                               score -= 5;
                               fetchData();
                             },
