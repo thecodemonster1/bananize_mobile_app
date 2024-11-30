@@ -24,8 +24,8 @@ class _MyHomePageState extends State<MyHome> {
   bool isComboActive = false;
 
   // Timer variables
-  int timerDuration = 20; // Timer duration in seconds
-  int remainingTime = 20;
+  int timerDuration = 25; // Timer duration in seconds
+  int remainingTime = 25;
   Timer? _timer;
 
   // Track image loading
@@ -56,6 +56,7 @@ class _MyHomePageState extends State<MyHome> {
         userInput = '';
         isLoading = false;
         remainingTime = timerDuration; // Reset timer for new question
+        startTimer();
       });
     } else {
       throw Exception('Failed to load data');
@@ -101,6 +102,7 @@ class _MyHomePageState extends State<MyHome> {
         gameOver();
       } else {
         fetchData();
+        // startTimer();
       }
     });
   }
@@ -188,6 +190,11 @@ class _MyHomePageState extends State<MyHome> {
                       top: 80, bottom: 10, left: 10, right: 10),
                   child: Column(
                     children: [
+                      Row(
+                        children: [
+                          ElevatedButton(onPressed: () {}, child: Text("Exit")),
+                        ],
+                      ),
                       // Display Score
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -240,6 +247,31 @@ class _MyHomePageState extends State<MyHome> {
                       const SizedBox(height: 20),
                       if (questionImageUrl != null)
                         isTimerRunning
+                            // ? Image.network(
+                            //     // "http://marcconrad.com/uob/banana/api.php",
+                            //     questionImageUrl!,
+                            //     loadingBuilder: (BuildContext context,
+                            //         Widget child,
+                            //         ImageChunkEvent? loadingProgress) {
+                            //       if (loadingProgress == null) {
+                            //         return child;
+                            //       }
+                            //       return Center(
+                            //         child: CircularProgressIndicator(
+                            //           value:
+                            //               loadingProgress.expectedTotalBytes !=
+                            //                       null
+                            //                   ? loadingProgress
+                            //                           .cumulativeBytesLoaded /
+                            //                       (loadingProgress
+                            //                               .expectedTotalBytes ??
+                            //                           1)
+                            //                   : null,
+                            //         ),
+                            //       );
+                            //     },
+                            //   )
+
                             ? Image.network(
                                 // "http://marcconrad.com/uob/banana/api.php",
                                 questionImageUrl!,
@@ -248,44 +280,19 @@ class _MyHomePageState extends State<MyHome> {
                                     ImageChunkEvent? loadingProgress) {
                                   if (loadingProgress == null) {
                                     return child;
+                                  } else {
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((_) {
+                                      if (mounted) {
+                                        setState(() {
+                                          // Update state here
+                                        });
+                                      }
+                                    });
+                                    return CircularProgressIndicator();
                                   }
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      value:
-                                          loadingProgress.expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  (loadingProgress
-                                                          .expectedTotalBytes ??
-                                                      1)
-                                              : null,
-                                    ),
-                                  );
                                 },
                               )
-
-                            // Image.network(
-                            //     // "http://marcconrad.com/uob/banana/api.php",
-                            //     questionImageUrl!,
-                            //     loadingBuilder: (BuildContext context,
-                            //         Widget child,
-                            //         ImageChunkEvent? loadingProgress) {
-                            //       if (loadingProgress == null) {
-                            //         return child;
-                            //       } else {
-                            //         WidgetsBinding.instance
-                            //             .addPostFrameCallback((_) {
-                            //           if (mounted) {
-                            //             setState(() {
-                            //               // Update state here
-                            //             });
-                            //           }
-                            //         });
-                            //         return CircularProgressIndicator();
-                            //       }
-                            //     },
-                            //   )
 
                             // Image.network(
                             //     questionImageUrl!,
