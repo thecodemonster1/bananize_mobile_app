@@ -174,6 +174,15 @@ class _MyHomePageState extends State<MyHome> {
     fetchData();
   }
 
+  void endGame() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Gameover(score: score),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _timer?.cancel();
@@ -339,17 +348,7 @@ class _MyHomePageState extends State<MyHome> {
                     ElevatedButton(
                       onPressed: () {
                         if (score <= 0) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Gameover(
-                                      score: score,
-                                    )),
-                            // onTransitionBegin: (route) {
-                            //   // Perform your on-start action here
-                            //   gameOver();
-                            // },
-                          );
+                          endGame();
                           // score -= 5;
                           // return gameOver();
                         }
@@ -372,7 +371,7 @@ class _MyHomePageState extends State<MyHome> {
                     // Answer Button
                     ElevatedButton(
                       onPressed: () {
-                        checkAnswer(); 
+                        checkAnswer();
                         // Clear the answer field
                         _answerController.clear();
                       },
