@@ -9,7 +9,6 @@ class Gameover extends StatefulWidget {
 }
 
 class _GameoverState extends State<Gameover> {
-  
   @override
   void initState() {
     super.initState();
@@ -22,7 +21,7 @@ class _GameoverState extends State<Gameover> {
       appBar: AppBar(
         title: const Text('Game Over'),
       ),
-      body: Text("Game Over! Your final score: $widget.score"),
+      body: Center(child: Text("Game Over!\nYour final score: $widget.score ")),
     );
   }
 }
