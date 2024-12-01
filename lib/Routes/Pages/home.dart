@@ -1,4 +1,4 @@
-import 'package:bananize_mobile_app/Routes/Pages/rules.dart';
+import 'package:bananize_mobile_app/Routes/Pages/gameOver.dart';
 import 'package:bananize_mobile_app/Routes/Widgets/heartIcon.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -292,46 +292,6 @@ class _MyHomePageState extends State<MyHome> {
                                   );
                                 },
                               )
-
-                            // ? Image.network(
-                            //     // "http://marcconrad.com/uob/banana/api.php",
-                            //     questionImageUrl!,
-                            //     loadingBuilder: (BuildContext context,
-                            //         Widget child,
-                            //         ImageChunkEvent? loadingProgress) {
-                            //       if (loadingProgress == null) {
-                            //         return child;
-                            //       } else {
-                            //         WidgetsBinding.instance
-                            //             .addPostFrameCallback((_) {
-                            //           if (mounted) {
-                            //             setState(() {
-                            //               // Update state here
-                            //             });
-                            //           }
-                            //         });
-                            //         return CircularProgressIndicator();
-                            //       }
-                            //     },
-                            //   )
-
-                            // Image.network(
-                            //     questionImageUrl!,
-                            //     loadingBuilder:
-                            //         (context, child, loadingProgress) {
-                            //       if (loadingProgress == null) {
-                            //         if (!isImageLoaded) {
-                            //           setState(() {
-                            //             isImageLoaded = true;
-                            //           });
-                            //           startTimer(); // Start the timer only when the image has loaded
-                            //         }
-                            //         return child;
-                            //       } else {
-                            //         return const CircularProgressIndicator();
-                            //       }
-                            //     },
-                            //   )
                             : Container(
                                 height: 200,
                                 color: Colors.black.withOpacity(0.2),
@@ -380,8 +340,19 @@ class _MyHomePageState extends State<MyHome> {
                           ElevatedButton(
                             onPressed: () {
                               if (score == 0) {
-                                score -= 5;
-                                return gameOver();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Gameover(
+                                            score: score,
+                                          )),
+                                  // onTransitionBegin: (route) {
+                                  //   // Perform your on-start action here
+                                  //   gameOver();
+                                  // },
+                                );
+                                // score -= 5;
+                                // return gameOver();
                               }
                               score -= 5;
                               fetchData();
