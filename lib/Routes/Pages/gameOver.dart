@@ -20,8 +20,11 @@ class _GameoverState extends State<Gameover> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Game Over'),
+        backgroundColor: Colors.amber[200],
       ),
-      body: Center(child: Text("Game Over!\nYour final score: $widget.score ")),
+      body: Center(
+          child: Text(
+              "Game Over!\nYour final score: ${widget.score <= 0 ? 0 : widget.score}")),
     );
   }
 }
