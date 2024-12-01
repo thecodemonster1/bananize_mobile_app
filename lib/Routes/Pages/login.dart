@@ -1,5 +1,7 @@
 import "package:bananize_mobile_app/Routes/Pages/rules.dart";
 import "package:bananize_mobile_app/Routes/Pages/signup.dart";
+import "package:bananize_mobile_app/Routes/Services/apple_auth.dart";
+import "package:bananize_mobile_app/Routes/Services/google_auth.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
@@ -162,7 +164,8 @@ class MyLogin extends StatelessWidget {
                                 height: iconSize.toDouble(),
                               ),
                               onPressed: () {
-                                _signInWithGoogle(context);
+                                // _signInWithGoogle(context);
+                                signInWithGoogle();
                               }, // Google login functionality
                             ),
                             IconButton(
@@ -171,7 +174,9 @@ class MyLogin extends StatelessWidget {
                                 width: iconSize.toDouble(),
                                 height: iconSize.toDouble(),
                               ),
-                              onPressed: () {}, // Add Apple login functionality
+                              onPressed: () {
+                                signInWithApple();
+                              }, // Add Apple login functionality
                             ),
                             IconButton(
                               icon: Image.asset(
@@ -179,8 +184,9 @@ class MyLogin extends StatelessWidget {
                                 width: iconSize.toDouble(),
                                 height: iconSize.toDouble(),
                               ),
-                              onPressed:
-                                  () {}, // Add Facebook login functionality
+                              onPressed: () {
+                                // signInWithFacebook();
+                              }, // Add Facebook login functionality
                             ),
                           ],
                         ),
