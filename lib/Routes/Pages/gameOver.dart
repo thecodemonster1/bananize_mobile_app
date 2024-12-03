@@ -1,3 +1,4 @@
+import 'package:bananize_mobile_app/Routes/Widgets/globals.dart';
 import 'package:flutter/material.dart';
 
 class Gameover extends StatefulWidget {
@@ -24,22 +25,20 @@ class _GameoverState extends State<Gameover> {
         widget.email.isNotEmpty ? widget.email.join(', ') : "Guest User";
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Game Over',
-            style: TextStyle(color: Color.fromARGB(227, 15, 15, 15))),
-        backgroundColor: const Color.fromARGB(255, 232, 211, 21),
-        elevation: 0,
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   // title: const Text('Game Over',
+      //   // style: TextStyle(color: Color.fromARGB(227, 15, 15, 15))),
+      //   backgroundColor: Globals.bgColor1,
+      //   elevation: 0,
+      //   centerTitle: true,
+      // ),
       body: Container(
+        // color: Globals.bgColor1,
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color.fromARGB(255, 232, 211, 21),
-              Color.fromARGB(255, 107, 64, 0)
-            ],
+            colors: [Globals.bgColor1, Globals.bgColor2],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -54,7 +53,7 @@ class _GameoverState extends State<Gameover> {
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
-                color: Colors.white,
+                color: Colors.black,
               ),
               textAlign: TextAlign.center,
             ),
@@ -84,7 +83,7 @@ class _GameoverState extends State<Gameover> {
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
-                color: Colors.white70,
+                color: Colors.black,
               ),
             ),
             Text(
@@ -92,7 +91,7 @@ class _GameoverState extends State<Gameover> {
               style: const TextStyle(
                 fontSize: 48,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             const SizedBox(height: 60),
@@ -103,12 +102,15 @@ class _GameoverState extends State<Gameover> {
                 Navigator.pop(context); // Navigate back
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                // foregroundColor: Colors.white,
+                backgroundColor: Colors.black,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(18.0),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32.0,
+                  vertical: 12.0,
+                ),
               ),
               icon: const Icon(
                 Icons.restart_alt,
