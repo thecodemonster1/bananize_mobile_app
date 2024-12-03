@@ -18,6 +18,7 @@ class MyLogin extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+  // function for signing in with email and password ===========================
   void _login(BuildContext context) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
@@ -33,7 +34,10 @@ class MyLogin extends StatelessWidget {
       // Navigate to the next screen if login is successful
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MyRules()),
+        MaterialPageRoute(
+            builder: (context) => MyRules(
+                  email: {userCredential.user!.email},
+                )),
       );
     } on FirebaseAuthException catch (e) {
       // Show an error message if login fails
@@ -43,6 +47,7 @@ class MyLogin extends StatelessWidget {
     }
   }
 
+  // function fo signing in with google ========================================
   Future<void> _signInWithGoogle(BuildContext context) async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
@@ -69,7 +74,10 @@ class MyLogin extends StatelessWidget {
       // Navigate to the next screen if sign-in is successful
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MyRules()),
+        MaterialPageRoute(
+            builder: (context) => MyRules(
+                  email: {userCredential.user!.email},
+                )),
       );
     } on FirebaseAuthException catch (e) {
       // Show an error message if sign-in fails
