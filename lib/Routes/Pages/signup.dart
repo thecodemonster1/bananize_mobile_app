@@ -27,7 +27,10 @@ class MySignup extends StatelessWidget {
       // Navigate to the next screen if sign-up is successful
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MyRules()),
+        MaterialPageRoute(
+            builder: (context) => MyRules(
+                  email: {userCredential.user!.email},
+                )),
       );
     } on FirebaseAuthException catch (e) {
       // Show an error message if sign-up fails
@@ -149,7 +152,7 @@ class MySignup extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
 
-                        // if already have an account 
+                        // if already have an account
                         TextButton(
                           onPressed: () {
                             Navigator.pop(context); // Go back to login page
