@@ -141,7 +141,7 @@ class MySignup extends StatelessWidget {
                             backgroundColor: Colors.black, // Text color (white)
                             shape: RoundedRectangleBorder(
                               borderRadius:
-                                  BorderRadius.circular(8.0), // Rounded corners
+                                  BorderRadius.circular(18.0), // Rounded corners
                             ),
                             padding: const EdgeInsets.symmetric(
                               horizontal: 32.0, // Horizontal padding
