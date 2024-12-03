@@ -1,4 +1,5 @@
 import 'package:bananize_mobile_app/Routes/Pages/gameOver.dart';
+import 'package:bananize_mobile_app/Routes/Widgets/globals.dart';
 import 'package:bananize_mobile_app/Routes/Widgets/heartIcon.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -199,211 +200,229 @@ class _MyHomePageState extends State<MyHome> {
         // body: isLoading
         //     ? const Center(child: CircularProgressIndicator())
         //     : SingleChildScrollView(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 80, bottom: 10, left: 10, right: 10),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+        body: Container(
+            width: double.infinity,
+            height: double.infinity,
+            // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Globals.bgColor1, Globals.bgColor2],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 80, bottom: 8, left: 8, right: 8),
+                child: Column(
                   children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor:
-                              const Color.fromARGB(255, 255, 255, 255),
-                          backgroundColor:
-                              const Color.fromARGB(255, 150, 34, 34),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0,
-                            vertical: 12.0,
-                          ),
-                        ),
-                        child: Icon(Icons.exit_to_app_rounded)),
-                    SizedBox(width: 10),
-                  ],
-                ),
-                SizedBox(height: 20),
-                // Display Score
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'LEVEL: $level',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor:
+                                  const Color.fromARGB(255, 255, 255, 255),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 150, 34, 34),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0,
+                                vertical: 12.0,
+                              ),
+                            ),
+                            child: Icon(Icons.exit_to_app_rounded)),
+                        SizedBox(width: 10),
+                      ],
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'SCORE: $score',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                    SizedBox(height: 20),
+                    // Display Score
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'LEVEL: $level',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
                         ),
-                      ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'SCORE: $score',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                // Timer and Lives Row
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                    const SizedBox(height: 10),
+                    // Timer and Lives Row
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Time: $remainingTime',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                        Row(
+                          children: List.generate(
+                            lives,
+                            (index) => const Hearticon(),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    if (questionImageUrl != null)
+                      isTimerRunning
+                          ? Image.network(
+                              // "http://marcconrad.com/uob/banana/api.php",
+                              questionImageUrl!,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            (loadingProgress
+                                                    .expectedTotalBytes ??
+                                                1)
+                                        : null,
+                                  ),
+                                );
+                              },
+                            )
+                          : Container(
+                              height: 200,
+                              color: Colors.black.withOpacity(0.2),
+                              alignment: Alignment.center,
+                              child: const Text(
+                                'Paused',
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                    const SizedBox(height: 20),
+                    TextField(
+                      controller: _answerController,
+                      onChanged: (value) {
+                        setState(() {
+                          userInput = value;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Enter your answer',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Play/Pause Button
+                        ElevatedButton(
+                            onPressed: toggleTimer,
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 32.0,
+                                vertical: 12.0,
+                              ),
+                            ),
+                            child: Text(isTimerRunning ? '▐▐ ' : ' ▶ ')),
+                        // Skip Button
+                        ElevatedButton(
+                          onPressed: () {
+                            if (score <= 0) {
+                              endGame();
+                              // score -= 5;
+                              // return gameOver();
+                            }
+                            score -= 5;
+                            fetchData();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 32.0,
+                              vertical: 12.0,
+                            ),
+                          ),
+                          child: const Text('Skip'),
+                        ),
+                        // Answer Button
+                        ElevatedButton(
+                          onPressed: () {
+                            checkAnswer();
+                            // Clear the answer field
+                            _answerController.clear();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.black,
+                            backgroundColor:
+                                const Color.fromARGB(255, 217, 170, 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 32.0,
+                              vertical: 12.0,
+                            ),
+                          ),
+                          child: const Text(
+                            'Answer',
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
                     Text(
-                      'Time: $remainingTime',
+                      message,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                      ),
-                    ),
-                    Row(
-                      children: List.generate(
-                        lives,
-                        (index) => const Hearticon(),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                if (questionImageUrl != null)
-                  isTimerRunning
-                      ? Image.network(
-                          // "http://marcconrad.com/uob/banana/api.php",
-                          questionImageUrl!,
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            }
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        (loadingProgress.expectedTotalBytes ??
-                                            1)
-                                    : null,
-                              ),
-                            );
-                          },
-                        )
-                      : Container(
-                          height: 200,
-                          color: Colors.black.withOpacity(0.2),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Paused',
-                            style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                        ),
-                const SizedBox(height: 20),
-                TextField(
-                  controller: _answerController,
-                  onChanged: (value) {
-                    setState(() {
-                      userInput = value;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Enter your answer',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Play/Pause Button
-                    ElevatedButton(
-                        onPressed: toggleTimer,
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 32.0,
-                            vertical: 12.0,
-                          ),
-                        ),
-                        child: Text(isTimerRunning ? '▐▐ ' : ' ▶ ')),
-                    // Skip Button
-                    ElevatedButton(
-                      onPressed: () {
-                        if (score <= 0) {
-                          endGame();
-                          // score -= 5;
-                          // return gameOver();
-                        }
-                        score -= 5;
-                        fetchData();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 32.0,
-                          vertical: 12.0,
-                        ),
-                      ),
-                      child: const Text('Skip'),
-                    ),
-                    // Answer Button
-                    ElevatedButton(
-                      onPressed: () {
-                        checkAnswer();
-                        // Clear the answer field
-                        _answerController.clear();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.yellow,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 32.0,
-                          vertical: 12.0,
-                        ),
-                      ),
-                      child: const Text('Answer'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  message,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
+              ),
+            )));
   }
 }
