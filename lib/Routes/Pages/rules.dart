@@ -2,7 +2,8 @@ import 'package:bananize_mobile_app/Routes/Pages/home.dart';
 import 'package:flutter/material.dart';
 
 class MyRules extends StatelessWidget {
-  const MyRules({super.key});
+  final Set<String?> email;
+  const MyRules({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,8 @@ class MyRules extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const MyHome()),
+                    MaterialPageRoute(
+                        builder: (context) => MyHome(email: email)),
                   );
                 },
                 style: ElevatedButton.styleFrom(
