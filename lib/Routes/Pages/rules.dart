@@ -1,4 +1,6 @@
 import 'package:bananize_mobile_app/Routes/Pages/home.dart';
+import 'package:bananize_mobile_app/Routes/Pages/scoreBoard.dart';
+import 'package:bananize_mobile_app/Routes/Widgets/globals.dart';
 import 'package:flutter/material.dart';
 
 class MyRules extends StatelessWidget {
@@ -8,8 +10,23 @@ class MyRules extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
+      // appBar: AppBar(
+      //   backgroundColor: Globals.bgColor1,
+      //   elevation: 0,
+      //   centerTitle: true,
+      // ),
+      // backgroundColor: Colors.white,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        padding: const EdgeInsets.only(top: 60),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Globals.bgColor1, Globals.bgColor2],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment
               .spaceBetween, // Space between content and button
@@ -65,26 +82,60 @@ class MyRules extends StatelessWidget {
             Padding(
               padding:
                   const EdgeInsets.all(16.0), // Add padding around the button
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyHome(email: email)),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Scoreboard()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32.0,
+                        vertical: 12.0,
+                      ),
+                    ),
+                    child: const Text(
+                      'Scoreboard',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    ),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32.0,
-                    vertical: 12.0,
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyHome(email: email)),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: const Color.fromARGB(255, 0, 0, 0),
+                      backgroundColor: const Color.fromARGB(255, 167, 167, 167),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32.0,
+                        vertical: 12.0,
+                      ),
+                    ),
+                    child: const Text(
+                      'Start Game',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                    ),
                   ),
-                ),
-                child: const Text('Start Game'),
+                ],
               ),
             ),
           ],
