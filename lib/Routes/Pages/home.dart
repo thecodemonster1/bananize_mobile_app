@@ -145,7 +145,8 @@ class _MyHomePageState extends State<MyHome> {
         isComboActive = false;
         message = 'Wrong answer. Try again!';
         if (lives <= 0) {
-          gameOver();
+          // gameOver();
+          endGame();
         }
       });
     }
