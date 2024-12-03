@@ -6,7 +6,8 @@ import 'dart:convert';
 import 'dart:async';
 
 class MyHome extends StatefulWidget {
-  const MyHome({super.key});
+  final Set<String?> email;
+  const MyHome({super.key, required this.email});
 
   @override
   State<MyHome> createState() => _MyHomePageState();
@@ -178,7 +179,7 @@ class _MyHomePageState extends State<MyHome> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => Gameover(score: score),
+        builder: (context) => Gameover(score: score, email: widget.email),
       ),
     );
   }
