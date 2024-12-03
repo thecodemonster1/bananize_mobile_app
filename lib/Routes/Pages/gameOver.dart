@@ -1,36 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class Gameover extends StatefulWidget {
-//   final int score;
-//   final Set<String?> email;
-//   const Gameover({super.key, required this.score, required this.email});
-
-//   @override
-//   State<Gameover> createState() => _GameoverState();
-// }
-
-// class _GameoverState extends State<Gameover> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Perform your on-start action here
-//     debugPrint("${widget.email}!! \nfinal score: ${widget.score}");
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Game Over'),
-//         backgroundColor: Colors.amber[200],
-//       ),
-//       body: Center(
-//           child: Text(
-//               "${widget.email}... \nGame Over!\nYour final score: ${widget.score <= 0 ? 0 : widget.score}")),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 
 class Gameover extends StatefulWidget {
@@ -58,8 +25,9 @@ class _GameoverState extends State<Gameover> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Game Over', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.deepOrangeAccent,
+        title: const Text('Game Over',
+            style: TextStyle(color: Color.fromARGB(227, 15, 15, 15))),
+        backgroundColor: const Color.fromARGB(255, 232, 211, 21),
         elevation: 0,
         centerTitle: true,
       ),
@@ -68,7 +36,10 @@ class _GameoverState extends State<Gameover> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.orangeAccent, Colors.deepOrange],
+            colors: [
+              Color.fromARGB(255, 232, 211, 21),
+              Color.fromARGB(255, 107, 64, 0)
+            ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -95,7 +66,7 @@ class _GameoverState extends State<Gameover> {
               style: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,
-                color: Colors.yellow.shade200,
+                color: const Color.fromARGB(255, 88, 85, 54),
                 shadows: [
                   Shadow(
                     offset: const Offset(2, 2),
@@ -124,47 +95,52 @@ class _GameoverState extends State<Gameover> {
                 color: Colors.white,
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 60),
 
             // Action buttons
             ElevatedButton.icon(
               onPressed: () {
-                // Restart the game or navigate to main menu
+                Navigator.pop(context); // Navigate back
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.greenAccent.shade700,
+                backgroundColor: const Color.fromARGB(255, 0, 0, 0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
               ),
-              icon: const Icon(Icons.restart_alt, size: 28),
+              icon: const Icon(
+                Icons.restart_alt,
+                size: 28,
+                color: Color.fromARGB(182, 255, 255, 255),
+              ),
               label: const Text(
                 'Play Again',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
             ),
             const SizedBox(height: 20),
-            OutlinedButton.icon(
-              onPressed: () {
-                Navigator.pop(context); // Navigate back
-              },
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Colors.white70),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-              ),
-              icon: const Icon(Icons.exit_to_app,
-                  color: Colors.white70, size: 28),
-              label: const Text(
-                'Exit',
-                style: TextStyle(fontSize: 20, color: Colors.white70),
-              ),
-            ),
+            // OutlinedButton.icon(
+            //   onPressed: () {},
+            //   style: OutlinedButton.styleFrom(
+            //     side: BorderSide(color: Colors.white70),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(25),
+            //     ),
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+            //   ),
+            //   icon: const Icon(Icons.exit_to_app,
+            //       color: Colors.white70, size: 28),
+            //   label: const Text(
+            //     'Exit',
+            //     style: TextStyle(fontSize: 20, color: Colors.white70),
+            //   ),
+            // ),
           ],
         ),
       ),
