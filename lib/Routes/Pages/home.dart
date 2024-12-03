@@ -102,7 +102,8 @@ class _MyHomePageState extends State<MyHome> {
       message = "Time's up! Moving to next question.";
       Future.delayed(const Duration(seconds: 1));
       if (lives <= 0) {
-        gameOver();
+        // gameOver();
+        endGame();
       } else {
         fetchData();
         // startTimer();
