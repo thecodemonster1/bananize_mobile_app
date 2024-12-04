@@ -16,7 +16,7 @@ class _ScoreboardState extends State<Scoreboard> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scoreboard'),
-        backgroundColor: Colors.amber[200],
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
