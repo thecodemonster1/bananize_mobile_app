@@ -1,3 +1,4 @@
+import 'package:bananize_mobile_app/Routes/Pages/scoreBoard.dart';
 import 'package:bananize_mobile_app/Routes/Widgets/globals.dart';
 import 'package:flutter/material.dart';
 
@@ -126,23 +127,28 @@ class _GameoverState extends State<Gameover> {
               ),
             ),
             const SizedBox(height: 20),
-            // OutlinedButton.icon(
-            //   onPressed: () {},
-            //   style: OutlinedButton.styleFrom(
-            //     side: BorderSide(color: Colors.white70),
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(25),
-            //     ),
-            //     padding:
-            //         const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-            //   ),
-            //   icon: const Icon(Icons.exit_to_app,
-            //       color: Colors.white70, size: 28),
-            //   label: const Text(
-            //     'Exit',
-            //     style: TextStyle(fontSize: 20, color: Colors.white70),
-            //   ),
-            // ),
+            OutlinedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Scoreboard()),
+                      );
+              },
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.white70),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+              ),
+              icon: const Icon(Icons.exit_to_app,
+                  color: Colors.white70, size: 28),
+              label: const Text(
+                'Scoreboard',
+                style: TextStyle(fontSize: 20, color: Colors.white70),
+              ),
+            ),
           ],
         ),
       ),
