@@ -348,22 +348,44 @@ class _MyHomePageState extends State<MyHome> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Play/Pause Button
-                        ElevatedButton(
-                            onPressed: toggleTimer,
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.black,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 32.0,
-                                vertical: 12.0,
-                              ),
+                        OutlinedButton.icon(
+                          onPressed: toggleTimer,
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(
+                                color: const Color.fromARGB(179, 0, 0, 0)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
                             ),
-                            child: Text(isTimerRunning ? '▐▐ ' : ' ▶ ')),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 32.0,
+                              vertical: 12.0,
+                            ),
+                          ),
+                          // icon: const Icon(Icons.exit_to_app,
+                          //     color: Color.fromARGB(179, 0, 0, 0), size: 28),
+                          label: Text(
+                            isTimerRunning ? '▐▐ ' : ' ▶ ',
+                            style: const TextStyle(
+                                fontSize: 20,
+                                color: Color.fromARGB(179, 0, 0, 0)),
+                          ),
+                        ),
+                        // ElevatedButton(
+                        //     onPressed: toggleTimer,
+                        //     style: ElevatedButton.styleFrom(
+                        //       foregroundColor: Colors.white,
+                        //       backgroundColor: Colors.black,
+                        //       shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(18.0),
+                        //       ),
+                        //       padding: const EdgeInsets.symmetric(
+                        //         horizontal: 32.0,
+                        //         vertical: 12.0,
+                        //       ),
+                        //     ),
+                        //     child: Text(isTimerRunning ? '▐▐ ' : ' ▶ ')),
                         // Skip Button
-                        ElevatedButton(
+                        OutlinedButton.icon(
                           onPressed: () {
                             if (score <= 0) {
                               endGame();
@@ -373,19 +395,41 @@ class _MyHomePageState extends State<MyHome> {
                             score -= 5;
                             fetchData();
                           },
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.black,
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(
+                                color: const Color.fromARGB(179, 0, 0, 0)),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
+                              borderRadius: BorderRadius.circular(18),
                             ),
                             padding: const EdgeInsets.symmetric(
                               horizontal: 32.0,
                               vertical: 12.0,
                             ),
                           ),
-                          child: const Text('Skip'),
+                          // icon: const Icon(Icons.exit_to_app,
+                          //     color: Color.fromARGB(179, 0, 0, 0), size: 28),
+                          label: const Text(
+                            'Skip',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Color.fromARGB(179, 0, 0, 0)),
+                          ),
                         ),
+                        // ElevatedButton(
+                        //   onPressed: () {},
+                        //   style: ElevatedButton.styleFrom(
+                        //     foregroundColor: Colors.white,
+                        //     backgroundColor: Colors.black,
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(18.0),
+                        //     ),
+                        //     padding: const EdgeInsets.symmetric(
+                        // horizontal: 32.0,
+                        // vertical: 12.0,
+                        //     ),
+                        //   ),
+                        //   child: const Text('Skip'),
+                        // ),
                         // Answer Button
                         ElevatedButton(
                           onPressed: () {
@@ -407,7 +451,8 @@ class _MyHomePageState extends State<MyHome> {
                           ),
                           child: const Text(
                             'Answer',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                         ),
                       ],
