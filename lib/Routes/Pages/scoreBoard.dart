@@ -16,44 +16,71 @@ class _ScoreboardState extends State<Scoreboard> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scoreboard'),
+        backgroundColor: Colors.amber[200],
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection('scores').orderBy('score', descending: true).snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No scores available'));
-          }
-
-          final scores = snapshot.data!.docs;
-
-          return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              columns: const [
-                DataColumn(label: Text('Rank')),
-                DataColumn(label: Text('Name')),
-                DataColumn(label: Text('Score')),
-              ],
-              rows: List<DataRow>.generate(
-                scores.length,
-                (index) {
-                  final scoreData = scores[index].data() as Map<String, dynamic>;
-                  return DataRow(
-                    cells: [
-                      DataCell(Text('${index + 1}')),
-                      DataCell(Text(scoreData['name'] ?? 'Unknown')),
-                      DataCell(Text('${scoreData['score']}')),
-                    ],
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Column(
+            children: [
+              StreamBuilder<QuerySnapshot>(
+                stream: _firestore
+                    .collection('scores')
+                    .orderBy('Score', descending: true)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+          
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Center(
+                        child: Text('No scores available',
+                            style: TextStyle(fontSize: 18)));
+                  }
+          
+                  final scores = snapshot.data!.docs;
+          
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        border: TableBorder.all(color: Colors.grey),
+                        columns: const [
+                          DataColumn(
+                              label: Text('Rank',
+                                  style: TextStyle(fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Email',
+                                  style: TextStyle(fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Score',
+                                  style: TextStyle(fontWeight: FontWeight.bold))),
+                        ],
+                        rows: List<DataRow>.generate(
+                          scores.length,
+                          (index) {
+                            final scoreData =
+                                scores[index].data() as Map<String, dynamic>;
+                            return DataRow(
+                              cells: [
+                                DataCell(Text('${scoreData['Rank'] ?? index + 1}')),
+                                DataCell(Text(scoreData['Name'] ?? 'Unknown')),
+                                DataCell(Text('${scoreData['Score'] ?? '0'}')),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   );
                 },
               ),
-            ),
-          );
-        },
+            ],
+          ),
+        ),
       ),
     );
   }
