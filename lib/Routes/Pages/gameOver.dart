@@ -1,3 +1,4 @@
+import 'package:bananize_mobile_app/Routes/Pages/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:bananize_mobile_app/Routes/Pages/scoreBoard.dart';
@@ -24,7 +25,8 @@ class _GameoverState extends State<Gameover> {
 
   Future<void> _uploadScoreToFirestore() async {
     final int finalScore = widget.score <= 0 ? 0 : widget.score;
-    final String emailDisplay = widget.email.isNotEmpty ? widget.email.join(', ') : "Guest User";
+    final String emailDisplay =
+        widget.email.isNotEmpty ? widget.email.join(', ') : "Guest User";
 
     try {
       final docRef = _firestore.collection('scores').doc(emailDisplay);
@@ -47,7 +49,8 @@ class _GameoverState extends State<Gameover> {
         await docRef.set({
           'Name': emailDisplay,
           'Score': finalScore,
-          'Rank': 1, // You can update this later dynamically based on sorting logic.
+          'Rank':
+              1, // You can update this later dynamically based on sorting logic.
           'CreatedAt': FieldValue.serverTimestamp(),
         });
       }
@@ -61,7 +64,8 @@ class _GameoverState extends State<Gameover> {
   @override
   Widget build(BuildContext context) {
     final int finalScore = widget.score <= 0 ? 0 : widget.score;
-    final String emailDisplay = widget.email.isNotEmpty ? widget.email.join(', ') : "Guest User";
+    final String emailDisplay =
+        widget.email.isNotEmpty ? widget.email.join(', ') : "Guest User";
 
     return Scaffold(
       body: Container(
@@ -130,7 +134,8 @@ class _GameoverState extends State<Gameover> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 32.0, vertical: 12.0),
               ),
               icon: const Icon(
                 Icons.restart_alt,
@@ -139,7 +144,10 @@ class _GameoverState extends State<Gameover> {
               ),
               label: const Text(
                 'Play Again',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
             ),
             const SizedBox(height: 20),
@@ -155,16 +163,46 @@ class _GameoverState extends State<Gameover> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              ),
+              // icon: const Icon(
+              //   Icons.exit_to_app,
+              //   color: Color.fromARGB(179, 0, 0, 0),
+              //   size: 28,
+              // ),
+              label: const Text(
+                'Scoreboard',
+                style: TextStyle(
+                    fontSize: 20, color: Color.fromARGB(179, 0, 0, 0)),
+              ),
+            ),
+            const SizedBox(height: 20),
+            OutlinedButton.icon(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyLogin()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Color.fromARGB(179, 0, 0, 0)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
               icon: const Icon(
                 Icons.exit_to_app,
                 color: Color.fromARGB(179, 0, 0, 0),
-                size: 28,
+                size: 20,
               ),
               label: const Text(
-                'Scoreboard',
-                style: TextStyle(fontSize: 20, color: Color.fromARGB(179, 0, 0, 0)),
+                'Log Out',
+                style: TextStyle(
+                    fontSize: 20, color: Color.fromARGB(179, 0, 0, 0)),
               ),
             ),
           ],
