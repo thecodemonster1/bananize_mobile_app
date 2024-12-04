@@ -183,9 +183,29 @@ class MyLogin extends StatelessWidget {
                                   width: iconSize.toDouble(),
                                   height: iconSize.toDouble(),
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
                                   // _signInWithGoogle(context);
-                                  signInWithGoogle();
+                                  User? user = await signInWithGoogle();
+                                  if (user != null) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MyRules(
+                                                email: {
+                                                  user.displayName ?? 'User'
+                                                },
+                                              )),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Signed in as ${user.displayName}')),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('Sign in failed')),
+                                    );
+                                  }
                                 }, // Google login functionality
                               ),
                               IconButton(
