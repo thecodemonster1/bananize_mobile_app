@@ -118,18 +118,20 @@ class MyRules extends StatelessWidget {
                       );
                     },
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: const Color.fromARGB(179, 0, 0, 0)),
+                      side:
+                          BorderSide(color: const Color.fromARGB(179, 0, 0, 0)),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(18),
                       ),
-                      // padding: const EdgeInsets.symmetric(
-                      //     horizontal: 40, vertical: 15),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
                     ),
                     icon: const Icon(Icons.exit_to_app,
                         color: Color.fromARGB(179, 0, 0, 0), size: 28),
                     label: const Text(
                       'Scoreboard',
-                      style: TextStyle(fontSize: 20, color: Color.fromARGB(179, 0, 0, 0)),
+                      style: TextStyle(
+                          fontSize: 20, color: Color.fromARGB(179, 0, 0, 0)),
                     ),
                   ),
                   ElevatedButton(
