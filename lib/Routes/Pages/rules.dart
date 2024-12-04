@@ -86,28 +86,50 @@ class MyRules extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ElevatedButton(
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(builder: (context) => Scoreboard()),
+                  //     );
+                  //   },
+                  //   style: ElevatedButton.styleFrom(
+                  //     foregroundColor: Colors.white,
+                  //     backgroundColor: Colors.black,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(18.0),
+                  //     ),
+                  //     padding: const EdgeInsets.symmetric(
+                  //       horizontal: 32.0,
+                  //       vertical: 12.0,
+                  //     ),
+                  //   ),
+                  //   child: const Text(
+                  //     'Scoreboard',
+                  //     style:
+                  //         TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  //   ),
+                  // ),
+                  OutlinedButton.icon(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Scoreboard()),
                       );
                     },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.black,
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: const Color.fromARGB(179, 0, 0, 0)),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
+                        borderRadius: BorderRadius.circular(25),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32.0,
-                        vertical: 12.0,
-                      ),
+                      // padding: const EdgeInsets.symmetric(
+                      //     horizontal: 40, vertical: 15),
                     ),
-                    child: const Text(
+                    icon: const Icon(Icons.exit_to_app,
+                        color: Color.fromARGB(179, 0, 0, 0), size: 28),
+                    label: const Text(
                       'Scoreboard',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                      style: TextStyle(fontSize: 20, color: Color.fromARGB(179, 0, 0, 0)),
                     ),
                   ),
                   ElevatedButton(
