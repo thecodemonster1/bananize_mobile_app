@@ -53,7 +53,7 @@ class _ScoreboardState extends State<Scoreboard> {
                               label: Text('Rank',
                                   style: TextStyle(fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Email',
+                              label: Text('Name/Email',
                                   style: TextStyle(fontWeight: FontWeight.bold))),
                           DataColumn(
                               label: Text('Score',
