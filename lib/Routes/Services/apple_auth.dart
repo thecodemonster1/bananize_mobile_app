@@ -3,7 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 Future<User?> signInWithApple() async {
   final credential = await SignInWithApple.getAppleIDCredential(
-    scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName],
+    scopes: [
+      AppleIDAuthorizationScopes.email,
+      AppleIDAuthorizationScopes.fullName
+    ],
   );
 
   final firebaseCredential = OAuthProvider("apple.com").credential(
@@ -11,5 +14,6 @@ Future<User?> signInWithApple() async {
     accessToken: credential.authorizationCode,
   );
 
-  return (await FirebaseAuth.instance.signInWithCredential(firebaseCredential)).user;
+  return (await FirebaseAuth.instance.signInWithCredential(firebaseCredential))
+      .user;
 }
