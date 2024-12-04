@@ -44,36 +44,41 @@ class _ScoreboardState extends State<Scoreboard> {
           
                   return Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        border: TableBorder.all(color: Colors.grey),
-                        columns: const [
-                          DataColumn(
-                              label: Text('Rank',
-                                  style: TextStyle(fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Name/Email',
-                                  style: TextStyle(fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Score',
-                                  style: TextStyle(fontWeight: FontWeight.bold))),
-                        ],
-                        rows: List<DataRow>.generate(
-                          scores.length,
-                          (index) {
-                            final scoreData =
-                                scores[index].data() as Map<String, dynamic>;
-                            return DataRow(
-                              cells: [
-                                DataCell(Text('${scoreData['Rank'] ?? index + 1}')),
-                                DataCell(Text(scoreData['Name'] ?? 'Unknown')),
-                                DataCell(Text('${scoreData['Score'] ?? '0'}')),
-                              ],
-                            );
-                          },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                            border: TableBorder.all(color: Colors.grey),
+                            columns: const [
+                              // DataColumn(
+                              //     label: Text('Rank',
+                              //         style: TextStyle(fontWeight: FontWeight.bold))),
+                              DataColumn(
+                                  label: Text('Name/Email',
+                                      style: TextStyle(fontWeight: FontWeight.bold))),
+                              DataColumn(
+                                  label: Text('Score',
+                                      style: TextStyle(fontWeight: FontWeight.bold))),
+                            ],
+                            rows: List<DataRow>.generate(
+                              scores.length,
+                              (index) {
+                                final scoreData =
+                                    scores[index].data() as Map<String, dynamic>;
+                                return DataRow(
+                                  cells: [
+                                    // DataCell(Text('${scoreData['Rank'] ?? index + 1}')),
+                                    DataCell(Text(scoreData['Name'] ?? 'Unknown')),
+                                    DataCell(Text('${scoreData['Score'] ?? '0'}')),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   );
                 },
