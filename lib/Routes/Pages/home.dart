@@ -79,6 +79,8 @@ class _MyHomePageState extends State<MyHome> {
         });
       }
 
+      
+
       debugPrint("Score uploaded successfully for $emailDisplay.");
     } catch (e) {
       debugPrint("Error uploading score: $e");
