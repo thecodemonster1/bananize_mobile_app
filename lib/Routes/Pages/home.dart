@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:bananize_mobile_app/Routes/Pages/gameOver.dart';
 import 'package:bananize_mobile_app/Routes/Widgets/globals.dart';
 import 'package:bananize_mobile_app/Routes/Widgets/heartIcon.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -28,26 +29,6 @@ class _MyHomePageState extends State<MyHome> {
   int level = 1;
   bool isComboActive = false;
 
-  // final AudioPlayer audioPlayer = AudioPlayer();
-  // // final audioPlayer = AudioPlayer();
-  // Future<void> playCorrectAudio() async {
-  //   try {
-  //     await audioPlayer.play(AssetSource('lib/Assets/Audio/won.wav'));
-  //     debugPrint("Playing correct audio");
-  //   } catch (e) {
-  //     // debugPrint("Error playing correct audio: $e");
-  //   }
-  // }
-
-  // Future<void> playWrongAudio() async {
-  //   try {
-  //     await audioPlayer.play(AssetSource('lib/Assets/Audio/loss.wav'));
-  //     debugPrint("Playing wrong audio");
-  //   } catch (e) {
-  //     // debugPrint("Error playing wrong audio: $e");
-  //   }
-  // }
-
   // Timer variables
   int timerDuration = 25; // Timer duration in seconds
   int remainingTime = 25;
@@ -61,32 +42,49 @@ class _MyHomePageState extends State<MyHome> {
   void initState() {
     super.initState();
     fetchData();
+    _uploadScoreToFirestore();
   }
 
-  // Future<void> fetchData() async {
-  //   setState(() {
-  //     isLoading = true;
-  //     message = '';
-  //     isImageLoaded = false; // Reset image loaded state
-  //   });
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  //   final response =
-  //       await http.get(Uri.parse('http://marcconrad.com/uob/banana/api.php'));
+  Future<void> _uploadScoreToFirestore() async {
+    final int finalScore = score <= 0 ? 0 : score;
+    final String emailDisplay =
+        widget.email.isNotEmpty ? widget.email.join(', ') : "Guest User";
 
-  //   if (response.statusCode == 200) {
-  //     final data = json.decode(response.body);
-  //     setState(() {
-  //       questionImageUrl = data['question'];
-  //       solution = data['solution'];
-  //       userInput = '';
-  //       isLoading = false;
-  //       remainingTime = timerDuration; // Reset timer for new question
-  //       startTimer();
-  //     });
-  //   } else {
-  //     throw Exception('Failed to load data');
-  //   }
-  // }
+    try {
+      final docRef = _firestore.collection('scores').doc(emailDisplay);
+
+      // Check if the document already exists
+      final docSnapshot = await docRef.get();
+
+      if (docSnapshot.exists) {
+        final currentData = docSnapshot.data() as Map<String, dynamic>;
+
+        // Update only if the new score is higher
+        if (finalScore > (currentData['Score'] ?? 0)) {
+          await docRef.update({
+            'Score': finalScore,
+            'UpdatedAt': FieldValue.serverTimestamp(),
+          });
+        }
+      } else {
+        // Create new document if not exists
+        await docRef.set({
+          'Name': emailDisplay,
+          'Score': finalScore,
+          'Rank':
+              1, // You can update this later dynamically based on sorting logic.
+          'CreatedAt': FieldValue.serverTimestamp(),
+        });
+      }
+
+      debugPrint("Score uploaded successfully for $emailDisplay.");
+    } catch (e) {
+      debugPrint("Error uploading score: $e");
+    }
+  }
+
   Future<void> fetchData() async {
     setState(() {
       isLoading = true;
@@ -278,6 +276,7 @@ class _MyHomePageState extends State<MyHome> {
                       children: [
                         ElevatedButton(
                             onPressed: () {
+                              _uploadScoreToFirestore();
                               Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(
