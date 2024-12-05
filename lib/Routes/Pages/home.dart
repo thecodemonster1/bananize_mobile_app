@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHome> {
         });
       }
 
-      
+
 
       debugPrint("Score uploaded successfully for $emailDisplay.");
     } catch (e) {
@@ -352,7 +352,6 @@ class _MyHomePageState extends State<MyHome> {
                     if (questionImageUrl != null)
                       isTimerRunning
                           ? Image.network(
-                              // "http://marcconrad.com/uob/banana/api.php",
                               questionImageUrl!,
                               loadingBuilder: (BuildContext context,
                                   Widget child,
