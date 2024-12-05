@@ -16,6 +16,7 @@ dependencies:
   sign_in_with_apple:
   http: ^1.2.2
   cloud_firestore: ^5.5.0
+  audioplayers: ^6.1.0
 
 dev_dependencies:
   flutter_launcher_icons:
@@ -42,6 +43,7 @@ flutter:
     - lib/Assets/Images/1657952440google-logo-png-transparent.png.webp
     - lib/Assets/Images/Facebook_Logo_2023.png
     - lib/Assets/Images/976px-Apple_logo_black.svg.png
+    - lib/Assets/Audio/
 
 flutter_icons:
   android: true
