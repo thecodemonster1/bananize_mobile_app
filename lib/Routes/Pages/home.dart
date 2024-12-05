@@ -28,25 +28,25 @@ class _MyHomePageState extends State<MyHome> {
   int level = 1;
   bool isComboActive = false;
 
-  final AudioPlayer audioPlayer = AudioPlayer();
-  // final audioPlayer = AudioPlayer();
-  Future<void> playCorrectAudio() async {
-    try {
-      await audioPlayer.play(AssetSource('lib/Assets/Audio/won.wav'));
-      debugPrint("Playing correct audio");
-    } catch (e) {
-      // debugPrint("Error playing correct audio: $e");
-    }
-  }
+  // final AudioPlayer audioPlayer = AudioPlayer();
+  // // final audioPlayer = AudioPlayer();
+  // Future<void> playCorrectAudio() async {
+  //   try {
+  //     await audioPlayer.play(AssetSource('lib/Assets/Audio/won.wav'));
+  //     debugPrint("Playing correct audio");
+  //   } catch (e) {
+  //     // debugPrint("Error playing correct audio: $e");
+  //   }
+  // }
 
-  Future<void> playWrongAudio() async {
-    try {
-      await audioPlayer.play(AssetSource('lib/Assets/Audio/loss.wav'));
-      debugPrint("Playing wrong audio");
-    } catch (e) {
-      // debugPrint("Error playing wrong audio: $e");
-    }
-  }
+  // Future<void> playWrongAudio() async {
+  //   try {
+  //     await audioPlayer.play(AssetSource('lib/Assets/Audio/loss.wav'));
+  //     debugPrint("Playing wrong audio");
+  //   } catch (e) {
+  //     // debugPrint("Error playing wrong audio: $e");
+  //   }
+  // }
 
   // Timer variables
   int timerDuration = 25; // Timer duration in seconds
@@ -63,28 +63,60 @@ class _MyHomePageState extends State<MyHome> {
     fetchData();
   }
 
+  // Future<void> fetchData() async {
+  //   setState(() {
+  //     isLoading = true;
+  //     message = '';
+  //     isImageLoaded = false; // Reset image loaded state
+  //   });
+
+  //   final response =
+  //       await http.get(Uri.parse('http://marcconrad.com/uob/banana/api.php'));
+
+  //   if (response.statusCode == 200) {
+  //     final data = json.decode(response.body);
+  //     setState(() {
+  //       questionImageUrl = data['question'];
+  //       solution = data['solution'];
+  //       userInput = '';
+  //       isLoading = false;
+  //       remainingTime = timerDuration; // Reset timer for new question
+  //       startTimer();
+  //     });
+  //   } else {
+  //     throw Exception('Failed to load data');
+  //   }
+  // }
   Future<void> fetchData() async {
     setState(() {
       isLoading = true;
       message = '';
-      isImageLoaded = false; // Reset image loaded state
+      isImageLoaded = false;
     });
 
-    final response =
-        await http.get(Uri.parse('http://marcconrad.com/uob/banana/api.php'));
+    try {
+      final response =
+          await http.get(Uri.parse('http://marcconrad.com/uob/banana/api.php'));
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          questionImageUrl = data['question'];
+          solution = data['solution'];
+          userInput = '';
+          isLoading = false;
+          remainingTime = timerDuration;
+          startTimer();
+        });
+      } else {
+        setState(() {
+          message = 'Failed to load data';
+        });
+      }
+    } catch (e) {
       setState(() {
-        questionImageUrl = data['question'];
-        solution = data['solution'];
-        userInput = '';
-        isLoading = false;
-        remainingTime = timerDuration; // Reset timer for new question
-        startTimer();
+        message = 'Error: $e';
       });
-    } else {
-      throw Exception('Failed to load data');
     }
   }
 
@@ -154,12 +186,12 @@ class _MyHomePageState extends State<MyHome> {
           debugPrint("comboCounter: $comboCounter");
         }
 
-        if (score >= level * 200) {
+        if (score >= level * 150) {
           levelUp();
         }
       });
 
-      await playCorrectAudio();
+      // await playCorrectAudio();
       await Future.delayed(const Duration(seconds: 1));
       fetchData();
     } else {
@@ -174,7 +206,7 @@ class _MyHomePageState extends State<MyHome> {
         }
       });
 
-      await playWrongAudio();
+      // await playWrongAudio();
     }
   }
 
