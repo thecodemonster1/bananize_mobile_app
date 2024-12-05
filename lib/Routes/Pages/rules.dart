@@ -54,7 +54,7 @@ class MyRules extends StatelessWidget {
                             "3. Activate Combo Mode by answering 3 questions consecutively for 20 points per correct answer.\n\n"
                             "4. You have 25 seconds to solve each question; failing to answer costs 1 life.\n\n"
                             "5. Start with 5 lives; the game ends when all lives are lost.\n\n"
-                            "6. Reach 100 points to level up, reset lives, and unlock new challenges.\n\n"
+                            "6. Reach 200 points to level up, reset lives, and unlock new challenges.\n\n"
                             "7. Pause and resume the timer anytime for strategic breaks.\n\n"
                             "8. Maximize your score by maintaining streaks and leveraging Combo Mode.\n\n"
                             "9. Incorrect answers reset your combo streak and cost 1 life.\n\n"

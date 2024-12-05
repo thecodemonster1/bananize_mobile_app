@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:bananize_mobile_app/Routes/Pages/gameOver.dart';
 import 'package:bananize_mobile_app/Routes/Widgets/globals.dart';
 import 'package:bananize_mobile_app/Routes/Widgets/heartIcon.dart';
@@ -26,6 +27,26 @@ class _MyHomePageState extends State<MyHome> {
   int lives = 5;
   int level = 1;
   bool isComboActive = false;
+
+  final AudioPlayer audioPlayer = AudioPlayer();
+  // final audioPlayer = AudioPlayer();
+  Future<void> playCorrectAudio() async {
+    try {
+      await audioPlayer.play(AssetSource('lib/Assets/Audio/won.wav'));
+      debugPrint("Playing correct audio");
+    } catch (e) {
+      // debugPrint("Error playing correct audio: $e");
+    }
+  }
+
+  Future<void> playWrongAudio() async {
+    try {
+      await audioPlayer.play(AssetSource('lib/Assets/Audio/loss.wav'));
+      debugPrint("Playing wrong audio");
+    } catch (e) {
+      // debugPrint("Error playing wrong audio: $e");
+    }
+  }
 
   // Timer variables
   int timerDuration = 25; // Timer duration in seconds
@@ -133,11 +154,12 @@ class _MyHomePageState extends State<MyHome> {
           debugPrint("comboCounter: $comboCounter");
         }
 
-        if (score >= level * 100) {
+        if (score >= level * 200) {
           levelUp();
         }
       });
 
+      await playCorrectAudio();
       await Future.delayed(const Duration(seconds: 1));
       fetchData();
     } else {
@@ -151,6 +173,8 @@ class _MyHomePageState extends State<MyHome> {
           endGame();
         }
       });
+
+      await playWrongAudio();
     }
   }
 
@@ -370,20 +394,7 @@ class _MyHomePageState extends State<MyHome> {
                                 color: Color.fromARGB(179, 0, 0, 0)),
                           ),
                         ),
-                        // ElevatedButton(
-                        //     onPressed: toggleTimer,
-                        //     style: ElevatedButton.styleFrom(
-                        //       foregroundColor: Colors.white,
-                        //       backgroundColor: Colors.black,
-                        //       shape: RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.circular(18.0),
-                        //       ),
-                        //       padding: const EdgeInsets.symmetric(
-                        //         horizontal: 32.0,
-                        //         vertical: 12.0,
-                        //       ),
-                        //     ),
-                        //     child: Text(isTimerRunning ? '▐▐ ' : ' ▶ ')),
+
                         // Skip Button
                         OutlinedButton.icon(
                           onPressed: () {
